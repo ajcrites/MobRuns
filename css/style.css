@@ -117,6 +117,7 @@ header span {
     left: 0;
     text-align: center;
     vertical-align: middle;
+    position: relative;
 }
 #buttons button:first-child {
     margin-right: 100px;
@@ -130,6 +131,33 @@ header span {
     display: inline-block;
     margin-left: 10px;
 }
+.throb {
+    -webkit-animation-name: radarthrob;
+    -webkit-animation-duration: 2.25s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    border: 3px solid white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+@-webkit-keyframes radarthrob {
+    from {
+        opacity: 1;
+        width: 0px;
+        height: 0px;
+    }
+    40% {
+        opacity: .1;
+        width: 100px;
+        height: 100px;
+    }
+}
+
 .view, .view::after, .view::before {
     width: 40px;
     height: 10px;
