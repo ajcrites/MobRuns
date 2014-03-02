@@ -291,3 +291,7 @@ header span {
 .discarded {
     color: rgb(255, 0, 0);
 }
+
+.remove-time {
+    color: red;
+}

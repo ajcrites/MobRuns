@@ -1,7 +1,7 @@
 /**
  * Model for user connected to the database
  */
-define(["knockout", "db", "util"], function (ko, db, util) {
+define(["knockout", "db", "util", "ko/model/Time",], function (ko, db, util, Time) {
     var User = function () {
         // Times are displayed initially, so set up empty times until
         // we can query the DB
@@ -47,13 +47,7 @@ define(["knockout", "db", "util"], function (ko, db, util) {
                         date = date.getFullYear() + "-" + ("" + date.getMonth()).pad(0, 2)
                             + "-" + ("" + date.getDate()).pad(0, 2);
 
-                        self.times.push({
-                            time: ms,
-                            date: date,
-                            ms: time.date,
-                            distance: time.distance,
-                            visible: time.visible,
-                        });
+                        self.times.push(new Time(self.userRef, prop, ms, date, time.date, time.distance, time.visible));
 
                         self.times.sort(function (left, right) {
                             return left.ms - right.ms;
