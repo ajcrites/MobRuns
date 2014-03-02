@@ -273,3 +273,21 @@ header span {
 .times th {
     padding: 5px;
 }
+
+.recorded, .discarded {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-out, top 1s ease-out;
+    font-size: 150%;
+    text-shadow: 1px 1px black;
+    text-align: center;
+}
+.recorded {
+    color: rgb(0, 255, 0);
+}
+.discarded {
+    color: rgb(255, 0, 0);
+}

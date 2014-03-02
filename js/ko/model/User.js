@@ -1,17 +1,35 @@
+/**
+ * Model for user connected to the database
+ */
 define(["knockout", "db", "util"], function (ko, db, util) {
     var User = function () {
+        // Times are displayed initially, so set up empty times until
+        // we can query the DB
         this.times = ko.observableArray();
     };
 
     User.prototype = {
+        /**
+         * Once the user is logged in, its id is available.  Pass this
+         * to the User model and initialize everything.  `id` is not
+         * initially available, but the user must be because
+         * `times` must be available for Knockout
+         */
         setUser: function (id) {
             var self = this;
+
+            // identify user by g+ unique ID
             self.userRef = db.child("users/" + id);
 
+            // Respond to retrieval of data from the DB.  This is both
+            // run initially and any time the snapshot is updated.
+            // Ideally I could get `value` only once and then use
+            // `child_added` et. al. to manipuliate the times array
             self.userRef.on("value", function (snapshot) {
                 var ms, item, date, time,
                     obj = snapshot.val();
 
+                // The snapshot contains everything
                 self.times.removeAll();
                 for (prop in obj) {
                     if (obj.hasOwnProperty(prop)) {
@@ -34,6 +52,7 @@ define(["knockout", "db", "util"], function (ko, db, util) {
                             date: date,
                             ms: time.date,
                             distance: time.distance,
+                            visible: time.visible,
                         });
 
                         self.times.sort(function (left, right) {
@@ -44,8 +63,13 @@ define(["knockout", "db", "util"], function (ko, db, util) {
             });
         },
 
+        // Store array of intervals to the DB
         recordTime: function (intervals) {
             var toRecord = [];
+
+            // Intervals contain observables for start and end elements,
+            // both of which are `Date`s.
+            // Store as milliseconds for easy conversion
             intervals.forEach(function (interval) {
                 toRecord.push({
                     start: interval.start().getTime(),
@@ -56,6 +80,7 @@ define(["knockout", "db", "util"], function (ko, db, util) {
             this.userRef.push({
                 intervals: toRecord,
                 distance: "",
+                // No deletion is done; just visibility
                 visible: true,
                 date: Date.now(),
             });

@@ -1,4 +1,8 @@
+/**
+ * General utility functions
+ */
 define(["util"], function (util) {
+    // Left-pad string (mostly used for a leading zero)
     String.prototype.pad = function (padWith, padWidth) {
         var str = this;
         while (str.length < padWidth) {
@@ -6,6 +10,8 @@ define(["util"], function (util) {
         }
         return str;
     };
+
+    // Parse time from milliseconds to display mm:ss.x
     return {
         displayTime: function (ms) {
             seconds = "" + parseInt(ms / 1000 % 60, 10);

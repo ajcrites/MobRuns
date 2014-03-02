@@ -22,6 +22,14 @@ function (
         self.pauseButtons = ko.observable(0);
         self.showStopwatch = ko.observable(false);
         self.showTimes = ko.observable(0);
+        self.recorded = ko.observable({
+            opacity: 0,
+            top: 0,
+        });
+        self.discarded = ko.observable({
+            opacity: 0,
+            top: 0,
+        });
 
         // Set up models
         self.countdown = new Counter;
@@ -46,6 +54,7 @@ function (
             self.user.setUser(id);
         }, self, "loggedIn");
 
+        // Initial countdown ends, so start the stopwatch!
         pubsub.subscribe(function () {
             self.showStopwatch(true);
             self.stopwatch.start();
@@ -81,40 +90,43 @@ function (
             }, 1000);
         };
 
+        // Display the table of recorded times for this user
         self.viewTimes = function () {
             self.startButtons(0);
             self.showTimes(1);
         };
 
+        // Pause the stopwatch
         self.pause = function () {
             self.stopwatch.pause();
             self.stopButton(0);
             self.pauseButtons(1);
         };
 
+        // Resume a paused stopwatch
         self.resume = function () {
             self.stopwatch.start();
             self.stopButton(1);
             self.pauseButtons(0);
         };
 
-        /**
-         * Discard the current recorded time by creating a new stopwatch intervals
-         */
+        // Discard the current recorded time by creating a new stopwatch intervals
         self.discard = function () {
             self.stopwatch.reset();
             self.home();
+            self.flash(self.discarded);
         };
 
+        // Record the current stopwatch to the database and go home
         self.record = function () {
             self.user.recordTime(self.stopwatch.intervals());
             self.stopwatch.reset();
             self.home();
+
+            self.flash(self.recorded);
         };
 
-        /**
-         * Display the main screen
-         */
+        // Display the main screen
         self.home = function () {
             self.stopButton(0);
             self.pauseButtons(0);
@@ -122,6 +134,21 @@ function (
             self.showTimes(0);
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
+        };
+
+        // Flash the provided message using CSS power (an observable)
+        self.flash = function (item) {
+            item({
+                opacity: 1,
+                top: "35%",
+            });
+
+            setTimeout(function () {
+                item({
+                    opacity: 0,
+                    top: 0,
+                });
+            }, 1000);
         };
     };
 });
