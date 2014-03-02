@@ -23,6 +23,8 @@ define(["knockout", "ko/pubsub", "ko/vm"], function (ko, pubsub, vm) {
             var s,
                 po = document.createElement('script');
 
+            document.querySelector("#signinButton span").setAttribute("data-clientid", config.clientid);
+
             ko.applyBindings(new vm);
 
             po.type = 'text/javascript';

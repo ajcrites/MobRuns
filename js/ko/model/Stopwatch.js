@@ -88,6 +88,11 @@ define(["knockout", "ko/model/Interval"], function (ko, Interval) {
                 }
             }.bind(this), 100);
         },
+
+        reset: function () {
+            this.intervals([]);
+            this.interval = null;
+        }
     };
 
     return StopWatch;

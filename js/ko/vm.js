@@ -85,5 +85,24 @@ function (
             self.stopButton(1);
             self.pauseButtons(0);
         };
+
+        /**
+         * Discard the current recorded time by creating a new stopwatch intervals
+         */
+        self.discard = function () {
+            self.stopwatch.reset();
+            self.showStopwatch(false);
+            self.home();
+        };
+
+        /**
+         * Display the main screen
+         */
+        self.home = function () {
+            self.stopButton(0);
+            self.pauseButtons(0);
+            self.startButtons(1);
+            document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
+        };
     };
 });
