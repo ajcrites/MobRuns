@@ -23,12 +23,31 @@
   </span>
 </div>
 
+<section class=times data-bind="style: { opacity: showTimes() }">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Distance</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: user.times">
+            <tr>
+                <td data-bind="text: date"></td>
+                <td data-bind="text: time"></td>
+                <td data-bind="text: distance"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
 <section class=buttons data-bind="style: { opacity: startButtons() }">
     <button data-bind="click: startTimer">
         <div class=play></div>
         <div class=throb></div>
     </button>
-    <button>
+    <button data-bind="click: viewTimes">
         <div class=view></div>
     </button>
 </section>

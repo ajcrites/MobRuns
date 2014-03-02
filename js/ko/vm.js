@@ -21,6 +21,7 @@ function (
         self.stopButton = ko.observable(0);
         self.pauseButtons = ko.observable(0);
         self.showStopwatch = ko.observable(false);
+        self.showTimes = ko.observable(0);
 
         // Set up models
         self.countdown = new Counter;
@@ -28,6 +29,10 @@ function (
         self.countdown.running(false);
 
         self.stopwatch = new Stopwatch;
+
+        // Need to set user so that the times observable exists
+        // for the corresponding binding for the table
+        self.user = new User;
 
         // On the `loggedIn` event (courtesy of Google),
         // remove the header and display the starting buttons
@@ -38,7 +43,7 @@ function (
                 self.startButtons(1);
             }, 600);
 
-            self.user = new User(id);
+            self.user.setUser(id);
         }, self, "loggedIn");
 
         pubsub.subscribe(function () {
@@ -76,6 +81,11 @@ function (
             }, 1000);
         };
 
+        self.viewTimes = function () {
+            self.startButtons(0);
+            self.showTimes(1);
+        };
+
         self.pause = function () {
             self.stopwatch.pause();
             self.stopButton(0);
@@ -109,6 +119,7 @@ function (
             self.stopButton(0);
             self.pauseButtons(0);
             self.startButtons(1);
+            self.showTimes(0);
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
         };

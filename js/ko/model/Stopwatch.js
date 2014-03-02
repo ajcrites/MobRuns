@@ -3,7 +3,7 @@
  * intervals (groups of start and end times) to represent the
  * total recorded time
  */
-define(["knockout", "ko/model/Interval"], function (ko, Interval) {
+define(["knockout", "ko/model/Interval", "util"], function (ko, Interval, util) {
     var StopWatch = function () {
         // Group of start/stop times
         this.intervals = ko.observableArray();
@@ -26,14 +26,7 @@ define(["knockout", "ko/model/Interval"], function (ko, Interval) {
             ko.utils.arrayForEach(this.intervals(), function (interval) {
                 ms += interval.end().getTime() - interval.start().getTime();
             });
-
-            seconds = "" + parseInt(ms / 1000 % 60, 10);
-            seconds = seconds.length < 2 ? "0" + seconds : seconds;
-            minutes = parseInt(ms / 60000 % 60, 10);
-            // Get the 10th of a second
-            ms = ("" + ms).substr(-3, 1);
-
-            return minutes + ":" + seconds + "." + ms;
+            return util.displayTime(ms);
         }, this);
     };
 

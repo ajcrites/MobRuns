@@ -1,7 +1,6 @@
 body {
     background: linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat;
     font-family: 'Century Gothic', 'Avant Garde Gothic', 'Avant Garde', 'URW Gothic L', helvetica, sans-serif;
-    overflow: hidden;
 }
 header {
     color: gray;
@@ -237,4 +236,25 @@ header span {
     width: 100%;
     left: 0;
     text-align: center;
+}
+
+.times {
+    opacity: 0;
+    transition: opacity 1s linear;
+}
+.times table {
+    margin: 0 auto;
+    color: white;
+    text-shadow: 1px 1px black;
+}
+.times td {
+    padding: 5px;
+    min-width: 50px;
+    text-align: left;
+}
+.times td:nth-child(2) {
+    text-align: right;
+}
+.times th {
+    padding: 5px;
 }
