@@ -46,7 +46,7 @@ text: countdown.counter"></section>
 </section>
 
 <section class="buttons pause-buttons" data-bind="visible: pauseButtons, style: { opacity: pauseButtons() }">
-    <button>
+    <button data-bind="click: record">
         <div class=okay>&#x2713;</div>
     </button>
     <button data-bind="click: resume">

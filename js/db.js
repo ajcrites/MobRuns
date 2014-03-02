@@ -1,4 +1,6 @@
-var firebase = new Firebase('https://popping-fire-7004.firebaseIO.com/');
+define(["config", "firebase"], function (config) {
+    return new Firebase(config.db);
+});
 
 /*
 var usersRef = firebase.child("users");

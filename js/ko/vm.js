@@ -4,11 +4,11 @@
 
 define([
     "jquery", "knockout", "ko/pubsub",
-    "ko/model/Counter", "ko/model/Stopwatch"
+    "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User"
 ],
 function (
     $, ko, pubsub,
-    Counter, Stopwatch
+    Counter, Stopwatch, User
 ) {
     return function () {
         var self = this;
@@ -37,6 +37,8 @@ function (
                 self.headerAnimate("slideout");
                 self.startButtons(1);
             }, 600);
+
+            self.user = new User(id);
         }, self, "loggedIn");
 
         pubsub.subscribe(function () {
@@ -91,7 +93,12 @@ function (
          */
         self.discard = function () {
             self.stopwatch.reset();
-            self.showStopwatch(false);
+            self.home();
+        };
+
+        self.record = function () {
+            self.user.recordTime(self.stopwatch.intervals());
+            self.stopwatch.reset();
             self.home();
         };
 
@@ -102,6 +109,7 @@ function (
             self.stopButton(0);
             self.pauseButtons(0);
             self.startButtons(1);
+            self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
         };
     };
