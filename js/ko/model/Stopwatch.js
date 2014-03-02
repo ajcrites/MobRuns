@@ -72,13 +72,6 @@ define(["knockout", "ko/model/Interval", "util"], function (ko, Interval, util) 
                     document.body.style.background = "hsl(" + rand(0, 360)
                         + "," + rand(70, 100) + "%," + rand(35, 55) + "%)";
                 }
-
-                // Background will not transition from gradient (flashes
-                // white and looks terrible).  Set up transitions once we've
-                // safely made the chnage to another color
-                if (20 == count) {
-                    document.body.style.transition = "background 1s linear";
-                }
             }.bind(this), 100);
         },
 

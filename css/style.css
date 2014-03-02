@@ -1,6 +1,7 @@
 body {
     background: linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat;
     font-family: 'Century Gothic', 'Avant Garde Gothic', 'Avant Garde', 'URW Gothic L', helvetica, sans-serif;
+    transition: background 1s linear;
 }
 header {
     color: gray;
@@ -132,6 +133,13 @@ header span {
     margin-right: 20px;
     text-shadow: 1px 1px rgba(0,0,0,.5);
 }
+.back-button {
+    top: auto;
+    -webkit-transform: none;
+    opacity: 1;
+    position: static;
+    margin-top: 25px;
+}
 .okay {
     color: rgb(0, 255, 0);
 }
@@ -141,7 +149,7 @@ header span {
 .buttons button:last-child {
     margin-right: 0;
 }
-.play {
+.play, .back {
     width: 0;
     height: 0;
     border-top: 25px solid transparent;
@@ -149,6 +157,13 @@ header span {
     border-left: 40px solid green;
     display: inline-block;
     margin-left: 10px;
+}
+.back {
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: none;
+    border-right: 40px solid red;
+    margin-left: -10px;
 }
 .throb {
     -webkit-animation-name: radarthrob;
