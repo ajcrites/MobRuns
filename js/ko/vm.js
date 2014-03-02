@@ -18,6 +18,8 @@ function (
 
         // Hide some other elements
         self.startButtons = ko.observable(0);
+        self.stopButton = ko.observable(0);
+        self.pauseButtons = ko.observable(0);
         self.showStopwatch = ko.observable(false);
 
         // Set up models
@@ -40,6 +42,7 @@ function (
         pubsub.subscribe(function () {
             self.showStopwatch(true);
             self.stopwatch.start();
+            self.stopButton(1);
         }, self, "countdownEnd");
 
         // Once play is clicked, give a short countdown so
@@ -69,6 +72,18 @@ function (
                     cd--;
                 }
             }, 1000);
+        };
+
+        self.pause = function () {
+            self.stopwatch.pause();
+            self.stopButton(0);
+            self.pauseButtons(1);
+        };
+
+        self.resume = function () {
+            self.stopwatch.start();
+            self.stopButton(1);
+            self.pauseButtons(0);
         };
     };
 });

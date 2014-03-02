@@ -1,4 +1,5 @@
 <title>MobRuns</title>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <link rel=stylesheet type=text/css href=/css/style.css>
 
@@ -38,5 +39,23 @@ style: { WebkitAnimationPlayState: countdown.running ? 'running' : 'paused' },
 text: countdown.counter"></section>
 
 <section class=stopwatch data-bind="visible: showStopwatch, text: stopwatch.text"></section>
+
+<section class="buttons stop-button" data-bind="visible: stopButton, style: { opacity: stopButton() }">
+    <button data-bind="click: pause">
+        <div class=stop></div>
+    </button>
+</section>
+
+<section class="buttons pause-buttons" data-bind="visible: pauseButtons, style: { opacity: pauseButtons() }">
+    <button>
+        <div class=okay>&#x2713;</div>
+    </button>
+    <button data-bind="click: resume">
+        <div class=play></div>
+    </button>
+    <button>
+        <div class=discard>×</div>
+    </button>
+</section>
 
 <script data-main=js/main src=//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js></script>
