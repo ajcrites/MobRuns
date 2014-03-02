@@ -200,3 +200,15 @@ header span {
         font-size: 1000%;
     }
 }
+
+.stopwatch {
+    font-size: 300%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    color: white;
+    text-shadow: 1px 1px black;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}

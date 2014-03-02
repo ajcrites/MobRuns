@@ -4,11 +4,11 @@
 
 define([
     "jquery", "knockout", "ko/pubsub",
-    "ko/model/Counter"
+    "ko/model/Counter", "ko/model/Stopwatch"
 ],
 function (
     $, ko, pubsub,
-    Counter
+    Counter, Stopwatch
 ) {
     return function () {
         var self = this;
@@ -18,9 +18,14 @@ function (
 
         // Hide some other elements
         self.startButtons = ko.observable(0);
+        self.showStopwatch = ko.observable(false);
+
+        // Set up models
         self.countdown = new Counter;
         self.countdown.counter(0);
         self.countdown.running(false);
+
+        self.stopwatch = new Stopwatch;
 
         // On the `loggedIn` event (courtesy of Google),
         // remove the header and display the starting buttons
@@ -31,6 +36,11 @@ function (
                 self.startButtons(1);
             }, 600);
         }, self, "loggedIn");
+
+        pubsub.subscribe(function () {
+            self.showStopwatch(true);
+            self.stopwatch.start();
+        }, self, "countdownEnd");
 
         // Once play is clicked, give a short countdown so
         // runners can get their bearings before taking off
@@ -52,6 +62,7 @@ function (
                     clearInterval(cdi);
                     self.countdown.counter(0);
                     self.countdown.running(false);
+                    pubsub.notifySubscribers(null, "countdownEnd");
                 }
                 else {
                     self.countdown.counter(cd);
