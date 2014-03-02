@@ -1,8 +1,9 @@
 <title>MobRuns</title>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <link rel=stylesheet type=text/css href=/css/style.css>
 
-<header>
+<header data-bind="style: { WebkitAnimationName: headerAnimate() }">
     <span class=m>M</span>
     <span class=o>o</span>
     <span class=b>b</span>
@@ -16,23 +17,71 @@
   <span
     class=g-signin
     data-callback=signinCallback
-    data-clientid="805845163588-gsbucnflfq4imie765ohjiud0c2vdpb4.apps.googleusercontent.com"
     data-cookiepolicy=single_host_origin
     data-width=wide
     data-scope=profile>
   </span>
 </div>
 
-<section id=buttons>
-    <button>
+<div class=recorded data-bind="style: { opacity: recorded().opacity, top: recorded().top }">Recorded</div>
+<div class=discarded data-bind="style: { opacity: discarded().opacity, top: discarded().top }">Discarded</div>
+
+<section class=times data-bind="style: { opacity: showTimes() }">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: user.times">
+            <tr data-bind="visible: visible">
+                <td data-bind="text: date"></td>
+                <td data-bind="text: time"></td>
+                <td data-bind="click: hide" class=remove-time>&#x2717;</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="buttons back-button">
+        <button data-bind="click: home">
+            <div class="back"></div>
+        </button>
+    </div>
+</section>
+
+<section class=buttons data-bind="style: { opacity: startButtons() }">
+    <button data-bind="click: startTimer">
         <div class=play></div>
         <div class=throb></div>
     </button>
-    <button>
+    <button data-bind="click: viewTimes">
         <div class=view></div>
     </button>
 </section>
 
-<div id=countdown></div>
+<section class=countdown data-bind="visible: countdown.counter,
+style: { WebkitAnimationPlayState: countdown.running ? 'running' : 'paused' },
+text: countdown.counter"></section>
+
+<section class=stopwatch data-bind="visible: showStopwatch, text: stopwatch.text"></section>
+
+<section class="buttons stop-button" data-bind="visible: stopButton, style: { opacity: stopButton() }">
+    <button data-bind="click: pause">
+        <div class=stop></div>
+    </button>
+</section>
+
+<section class="buttons pause-buttons" data-bind="visible: pauseButtons, style: { opacity: pauseButtons() }">
+    <button data-bind="click: record">
+        <div class=okay>&#x2713;</div>
+    </button>
+    <button data-bind="click: resume">
+        <div class=play></div>
+    </button>
+    <button data-bind="click: discard">
+        <div class=discard>×</div>
+    </button>
+</section>
 
 <script data-main=js/main src=//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js></script>
