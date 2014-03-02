@@ -5,10 +5,6 @@ define(["knockout", "ko/pubsub", "ko/vm"], function (ko, pubsub, vm) {
     window.signinCallback = function (authResult) {
         if (authResult['status']['signed_in']) {
             document.getElementById('signinButton').setAttribute('style', 'display: none');
-            setTimeout(function () {
-                document.querySelector("header").style.WebkitAnimationName = "slideout";
-                document.querySelector("#buttons").style.opacity = 1;
-            }, 600);
 
             gapi.client.request({
                 path: "/plus/v1/people/me",

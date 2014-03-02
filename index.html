@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <link rel=stylesheet type=text/css href=/css/style.css>
 
-<header>
+<header data-bind="style: { WebkitAnimationName: headerAnimate() }">
     <span class=m>M</span>
     <span class=o>o</span>
     <span class=b>b</span>
@@ -23,8 +23,8 @@
   </span>
 </div>
 
-<section id=buttons>
-    <button>
+<section class=buttons data-bind="style: { opacity: startButtons() }">
+    <button data-bind="click: startTimer">
         <div class=play></div>
         <div class=throb></div>
     </button>
@@ -33,6 +33,8 @@
     </button>
 </section>
 
-<div id=countdown></div>
+<section class=countdown data-bind="visible: countdown.counter,
+style: { WebkitAnimationPlayState: countdown.running ? 'running' : 'paused' },
+text: countdown.counter"></section>
 
 <script data-main=js/main src=//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js></script>
