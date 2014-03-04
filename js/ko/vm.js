@@ -94,6 +94,7 @@ function (
         self.viewTimes = function () {
             self.startButtons(0);
             self.showTimes(1);
+            document.body.style.overflow = "auto";
         };
 
         // Pause the stopwatch
@@ -134,6 +135,8 @@ function (
             self.showTimes(0);
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
+            document.body.style.overflow = "hidden";
+            document.body.scrollTop = 0;
         };
 
         // Flash the provided message using CSS power (an observable)
