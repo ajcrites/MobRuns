@@ -14,11 +14,9 @@ header {
     text-align: center;
     left: 0;
     width: 100%;
-    -webkit-animation-name: slide-from-top;
     -webkit-animation-duration: .6s;
     -webkit-animation-fill-mode: forwards;
     -webkit-animation-timing-function: ease-out;
-    opacity: 0;
     transition: top 1.5s ease-out;
 }
 

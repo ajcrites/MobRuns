@@ -14,7 +14,7 @@ function (
         var self = this;
 
         // Default header animation (show it immediately)
-        self.headerAnimate = ko.observable("slidein");
+        self.headerAnimate = ko.observable("slide-from-top");
 
         // Hide some other elements
         self.startButtons = ko.observable(0);
