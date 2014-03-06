@@ -47,7 +47,7 @@ function (
         // (after some time for animation purposes)
         pubsub.subscribe(function (id) {
             setTimeout(function () {
-                self.headerAnimate("slideout");
+                self.headerAnimate("slide-out-top");
                 self.startButtons(1);
             }, 600);
 
