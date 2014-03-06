@@ -4,7 +4,8 @@
 
 define([
     "jquery", "knockout", "ko/pubsub",
-    "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User"
+    "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User",
+    "ko/custom-binding/anim-handle-flow"
 ],
 function (
     $, ko, pubsub,
@@ -17,7 +18,9 @@ function (
         self.headerAnimate = ko.observable("slide-from-top");
 
         // Hide some other elements
-        self.startButtons = ko.observable(0);
+        self.startButtons = ko.observable({
+            opacity: 0
+        });
         self.stopButton = ko.observable(0);
         self.pauseButtons = ko.observable(0);
         self.showStopwatch = ko.observable(false);
@@ -48,7 +51,9 @@ function (
         pubsub.subscribe(function (id) {
             setTimeout(function () {
                 self.headerAnimate("slide-out-top");
-                self.startButtons(1);
+                self.startButtons({
+                    opacity: 1
+                });
             }, 600);
 
             self.user.setUser(id);
@@ -69,7 +74,9 @@ function (
                 cd = 3;
 
             // fade out the start buttons
-            self.startButtons(0);
+            self.startButtons({
+                opacity: 0
+            });
 
             // start the countdown timer
             self.countdown.running(true);
@@ -92,7 +99,9 @@ function (
 
         // Display the table of recorded times for this user
         self.viewTimes = function () {
-            self.startButtons(0);
+            self.startButtons({
+                opacity: 0
+            });
             self.showTimes(1);
             document.body.style.overflow = "auto";
         };
@@ -131,7 +140,9 @@ function (
         self.home = function () {
             self.stopButton(0);
             self.pauseButtons(0);
-            self.startButtons(1);
+            self.startButtons({
+                opacity: 1
+            });
             self.showTimes(0);
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
