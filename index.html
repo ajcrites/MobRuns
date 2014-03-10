@@ -53,11 +53,11 @@
 </section>
 
 <section class=buttons data-bind="animHandleFlow: startButtons()">
-    <button data-bind="click: startTimer">
+    <button data-bind="click: stateStartTimer">
         <div class=play></div>
         <div class=throb></div>
     </button>
-    <button data-bind="click: viewTimes">
+    <button data-bind="click: stateViewTimes">
         <div class=view></div>
     </button>
 </section>
@@ -69,19 +69,19 @@ text: countdown.counter"></section>
 <section class=stopwatch data-bind="visible: showStopwatch, text: stopwatch.text"></section>
 
 <section class="buttons stop-button" data-bind="animHandleFlow: stopButton()">
-    <button data-bind="click: pause">
+    <button data-bind="click: statePause">
         <div class=stop></div>
     </button>
 </section>
 
 <section class="buttons pause-buttons" data-bind="animHandleFlow: pauseButtons()">
-    <button data-bind="click: record">
+    <button data-bind="click: stateRecord">
         <div class=okay>&#x2713;</div>
     </button>
-    <button data-bind="click: resume">
+    <button data-bind="click: stateResume">
         <div class=play></div>
     </button>
-    <button data-bind="click: discard">
+    <button data-bind="click: stateDiscard">
         <div class=discard>×</div>
     </button>
 </section>

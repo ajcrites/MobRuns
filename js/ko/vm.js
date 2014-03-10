@@ -3,16 +3,19 @@
  */
 
 define([
-    "jquery", "knockout", "ko/pubsub",
+    "jquery", "knockout", "ko/pubsub", "ko/state",
     "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User",
     "ko/custom-binding/anim-handle-flow"
 ],
 function (
-    $, ko, pubsub,
+    $, ko, pubsub, state,
     Counter, Stopwatch, User
 ) {
     return function () {
         var self = this;
+
+        // Set up state machine
+        self.state = new state(self);
 
         // Default header animation (show it immediately)
         self.headerAnimate = ko.observable("slide-from-top");
@@ -56,10 +59,7 @@ function (
         // (after some time for animation purposes)
         pubsub.subscribe(function (id) {
             setTimeout(function () {
-                self.headerAnimate("slide-out-top");
-                self.startButtons({
-                    opacity: 1
-                });
+                self.state.state.login();
             }, 600);
 
             self.user.setUser(id);
@@ -104,6 +104,9 @@ function (
                 }
             }, 1000);
         };
+        self.stateStartTimer = function () {
+            self.state.state.startTimer();
+        };
 
         // Display the table of recorded times for this user
         self.viewTimes = function () {
@@ -114,6 +117,9 @@ function (
                 opacity: 1
             });
             document.body.style.overflow = "auto";
+        };
+        self.stateViewTimes = function () {
+            self.state.state.viewTimes();
         };
 
         // Pause the stopwatch
@@ -126,6 +132,9 @@ function (
                 opacity: 1
             });
         };
+        self.statePause = function () {
+            self.state.state.pause();
+        }
 
         // Resume a paused stopwatch
         self.resume = function () {
@@ -137,12 +146,18 @@ function (
                 opacity: 0
             });
         };
+        self.stateResume = function () {
+            self.state.state.resume();
+        };
 
         // Discard the current recorded time by creating a new stopwatch intervals
         self.discard = function () {
             self.stopwatch.reset();
             self.home();
             self.flash(self.discarded);
+        };
+        self.stateDiscard = function () {
+            self.state.state.discard();
         };
 
         // Record the current stopwatch to the database and go home
@@ -153,9 +168,13 @@ function (
 
             self.flash(self.recorded);
         };
+        self.stateRecord = function () {
+            self.state.state.record();
+        };
 
         // Display the main screen
         self.home = function () {
+            self.state.setLoggedInState();
             self.stopButton({
                 opacity: 0
             });
