@@ -1,0 +1,78 @@
+/**
+ * MobRuns title -- slide from the top to the middle
+ */
+@-webkit-keyframes slide-from-top {
+    to {
+        top: 50%;
+        opacity: .7;
+    }
+}
+/**
+ * Counter-animation to above
+ */
+@-webkit-keyframes slide-out-top {
+    from {
+        top: 50%;
+        opacity: .7;
+    }
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+/**
+ * Fade effect for individual header letters
+ */
+@-webkit-keyframes blip {
+    0% {
+        opacity: 1;
+    }
+    5% {
+        opacity: .3;
+    }
+    10% {
+        opacity: 1;
+    }
+}
+
+/**
+ * Slide "Sign In" button in from the bottom when it is ready to appear
+ */
+@-webkit-keyframes slide-up-from-bottom {
+  to {
+    bottom: 25px;
+  }
+}
+
+/**
+ * Pulse effect on play button.  The inner "throbbing" circle grows
+ * to match the outer
+ */
+@-webkit-keyframes radar-throb {
+    from {
+        opacity: 1;
+        width: 0px;
+        height: 0px;
+    }
+    40% {
+        opacity: .1;
+        width: 100px;
+        height: 100px;
+    }
+    to {
+        opacity: .1;
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/**
+ * Countdown numbers grow towards you and fade
+ */
+@-webkit-keyframes countdown {
+    to {
+        opacity: .2;
+        font-size: 1000%;
+    }
+}

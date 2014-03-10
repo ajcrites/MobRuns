@@ -2,81 +2,7 @@ body {
     background: linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat;
     font-family: 'Century Gothic', 'Avant Garde Gothic', 'Avant Garde', 'URW Gothic L', helvetica, sans-serif;
     transition: background 1s linear;
-}
-header {
-    color: gray;
-    font-weight: bold;
-    text-shadow: 1px 1px black;
-    font-size: 200%;
-    opacity: .7;
-    position: absolute;
-    top: 0;
-    -webkit-transform: translateY(-100%);
-    text-align: center;
-    left: 0;
-    width: 100%;
-    -webkit-animation-name: slidein;
-    -webkit-animation-duration: .6s;
-    -webkit-animation-fill-mode: forwards;
-    -webkit-animation-timing-function: ease-out;
-    opacity: 0;
-    transition: top 1.5s ease-out;
-}
-@-webkit-keyframes slidein {
-    to {
-        top: 50%;
-        opacity: .7;
-    }
-}
-@-webkit-keyframes slideout {
-    from {
-        top: 50%;
-        opacity: .7;
-    }
-    to {
-        top: 0;
-        opacity: 0;
-    }
-}
-
-header span {
-   -webkit-animation-name: blip;
-   -webkit-animation-iteration-count: infinite;
-   -webkit-animation-duration: 4s;
-}
-
-.m {
-    -webkit-animation-delay: 2.5s;
-}
-.o {
-    -webkit-animation-delay: 2.7s;
-}
-.b {
-    -webkit-animation-delay: 2.9s;
-}
-.r {
-    -webkit-animation-delay: 3.1s;
-}
-.u {
-    -webkit-animation-delay: 3.3s;
-}
-.n {
-    -webkit-animation-delay: 3.5s;
-}
-.s {
-    -webkit-animation-delay: 3.7s;
-}
-
-@-webkit-keyframes blip {
-    0% {
-        opacity: 1;
-    }
-    5% {
-        opacity: .3;
-    }
-    10% {
-        opacity: 1;
-    }
+    overflow: hidden;
 }
 
 #signinButton {
@@ -86,15 +12,10 @@ header span {
     width: 100%;
     left: 0;
     transition: bottom 1s ease-in;
-    -webkit-animation-name: slideup;
+    -webkit-animation-name: slide-up-from-bottom;
     -webkit-animation-duration: 1.5s;
     -webkit-animation-fill-mode: forwards;
     -webkit-animation-timing-function: ease-out;
-}
-@-webkit-keyframes slideup {
-  to {
-    bottom: 25px;
-  }
 }
 
 .buttons {
@@ -125,6 +46,7 @@ header span {
     vertical-align: middle;
     position: relative;
     margin-right: 50px;
+    box-sizing: border-box;
 }
 .pause-buttons button {
     font-size: 400%;
@@ -166,7 +88,7 @@ header span {
     margin-left: -10px;
 }
 .throb {
-    -webkit-animation-name: radarthrob;
+    -webkit-animation-name: radar-throb;
     -webkit-animation-duration: 2.25s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
@@ -177,20 +99,9 @@ header span {
     -webkit-transform: translateY(-50%) translateX(-50%);
     border-radius: 50%;
     z-index: -1;
+    box-sizing: border-box;
 }
 
-@-webkit-keyframes radarthrob {
-    from {
-        opacity: 1;
-        width: 0px;
-        height: 0px;
-    }
-    40% {
-        opacity: .1;
-        width: 100px;
-        height: 100px;
-    }
-}
 
 .view, .view::after, .view::before {
     width: 40px;
@@ -235,12 +146,6 @@ header span {
     text-align: center;
 }
 
-@-webkit-keyframes countdown {
-    to {
-        opacity: .2;
-        font-size: 1000%;
-    }
-}
 
 .stopwatch {
     font-size: 300%;

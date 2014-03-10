@@ -3,25 +3,37 @@
  */
 
 define([
-    "jquery", "knockout", "ko/pubsub",
-    "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User"
+    "jquery", "knockout", "ko/pubsub", "ko/state",
+    "ko/model/Counter", "ko/model/Stopwatch", "ko/model/User",
+    "ko/custom-binding/anim-handle-flow"
 ],
 function (
-    $, ko, pubsub,
+    $, ko, pubsub, state,
     Counter, Stopwatch, User
 ) {
     return function () {
         var self = this;
 
+        // Set up state machine
+        self.state = new state(self);
+
         // Default header animation (show it immediately)
-        self.headerAnimate = ko.observable("slidein");
+        self.headerAnimate = ko.observable("slide-from-top");
 
         // Hide some other elements
-        self.startButtons = ko.observable(0);
-        self.stopButton = ko.observable(0);
-        self.pauseButtons = ko.observable(0);
+        self.startButtons = ko.observable({
+            opacity: 0
+        });
+        self.stopButton = ko.observable({
+            opacity: 0
+        });
+        self.pauseButtons = ko.observable({
+            opacity: 0
+        });
         self.showStopwatch = ko.observable(false);
-        self.showTimes = ko.observable(0);
+        self.showTimes = ko.observable({
+            opacity: 0
+        });
         self.recorded = ko.observable({
             opacity: 0,
             top: 0,
@@ -47,8 +59,7 @@ function (
         // (after some time for animation purposes)
         pubsub.subscribe(function (id) {
             setTimeout(function () {
-                self.headerAnimate("slideout");
-                self.startButtons(1);
+                self.state.state.login();
             }, 600);
 
             self.user.setUser(id);
@@ -58,7 +69,9 @@ function (
         pubsub.subscribe(function () {
             self.showStopwatch(true);
             self.stopwatch.start();
-            self.stopButton(1);
+            self.stopButton({
+                opacity: 1
+            });
         }, self, "countdownEnd");
 
         // Once play is clicked, give a short countdown so
@@ -69,7 +82,9 @@ function (
                 cd = 3;
 
             // fade out the start buttons
-            self.startButtons(0);
+            self.startButtons({
+                opacity: 0
+            });
 
             // start the countdown timer
             self.countdown.running(true);
@@ -89,25 +104,50 @@ function (
                 }
             }, 1000);
         };
+        self.stateStartTimer = function () {
+            self.state.state.startTimer();
+        };
 
         // Display the table of recorded times for this user
         self.viewTimes = function () {
-            self.startButtons(0);
-            self.showTimes(1);
+            self.startButtons({
+                opacity: 0
+            });
+            self.showTimes({
+                opacity: 1
+            });
+            document.body.style.overflow = "auto";
+        };
+        self.stateViewTimes = function () {
+            self.state.state.viewTimes();
         };
 
         // Pause the stopwatch
         self.pause = function () {
             self.stopwatch.pause();
-            self.stopButton(0);
-            self.pauseButtons(1);
+            self.stopButton({
+                opacity: 0
+            });
+            self.pauseButtons({
+                opacity: 1
+            });
         };
+        self.statePause = function () {
+            self.state.state.pause();
+        }
 
         // Resume a paused stopwatch
         self.resume = function () {
             self.stopwatch.start();
-            self.stopButton(1);
-            self.pauseButtons(0);
+            self.stopButton({
+                opacity: 1
+            });
+            self.pauseButtons({
+                opacity: 0
+            });
+        };
+        self.stateResume = function () {
+            self.state.state.resume();
         };
 
         // Discard the current recorded time by creating a new stopwatch intervals
@@ -115,6 +155,9 @@ function (
             self.stopwatch.reset();
             self.home();
             self.flash(self.discarded);
+        };
+        self.stateDiscard = function () {
+            self.state.state.discard();
         };
 
         // Record the current stopwatch to the database and go home
@@ -125,15 +168,29 @@ function (
 
             self.flash(self.recorded);
         };
+        self.stateRecord = function () {
+            self.state.state.record();
+        };
 
         // Display the main screen
         self.home = function () {
-            self.stopButton(0);
-            self.pauseButtons(0);
-            self.startButtons(1);
-            self.showTimes(0);
+            self.state.setLoggedInState();
+            self.stopButton({
+                opacity: 0
+            });
+            self.pauseButtons({
+                opacity: 0
+            });
+            self.startButtons({
+                opacity: 1
+            });
+            self.showTimes({
+                opacity: 0
+            });
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
+            document.body.style.overflow = "hidden";
+            document.body.scrollTop = 0;
         };
 
         // Flash the provided message using CSS power (an observable)

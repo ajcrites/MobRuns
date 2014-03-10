@@ -1,4 +1,4 @@
-# MobRuns 0.0
+# MobRuns 0.1
 
 Simple stopwatch utility for recording running times.
 
