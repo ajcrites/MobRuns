@@ -25,10 +25,10 @@
   </span>
 </div>
 
-<div class=recorded data-bind="style: { opacity: recorded().opacity, top: recorded().top }">Recorded</div>
-<div class=discarded data-bind="style: { opacity: discarded().opacity, top: discarded().top }">Discarded</div>
+<div class=recorded data-bind="animHandleFlow: recorded()">Recorded</div>
+<div class=discarded data-bind="animHandleFlow: discarded()">Discarded</div>
 
-<section class=times data-bind="style: { opacity: showTimes() }">
+<section class=times data-bind="animHandleFlow: showTimes()">
     <table>
         <thead>
             <tr>
@@ -68,13 +68,13 @@ text: countdown.counter"></section>
 
 <section class=stopwatch data-bind="visible: showStopwatch, text: stopwatch.text"></section>
 
-<section class="buttons stop-button" data-bind="visible: stopButton, style: { opacity: stopButton() }">
+<section class="buttons stop-button" data-bind="animHandleFlow: stopButton()">
     <button data-bind="click: pause">
         <div class=stop></div>
     </button>
 </section>
 
-<section class="buttons pause-buttons" data-bind="visible: pauseButtons, style: { opacity: pauseButtons() }">
+<section class="buttons pause-buttons" data-bind="animHandleFlow: pauseButtons()">
     <button data-bind="click: record">
         <div class=okay>&#x2713;</div>
     </button>

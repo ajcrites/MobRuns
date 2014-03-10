@@ -21,10 +21,16 @@ function (
         self.startButtons = ko.observable({
             opacity: 0
         });
-        self.stopButton = ko.observable(0);
-        self.pauseButtons = ko.observable(0);
+        self.stopButton = ko.observable({
+            opacity: 0
+        });
+        self.pauseButtons = ko.observable({
+            opacity: 0
+        });
         self.showStopwatch = ko.observable(false);
-        self.showTimes = ko.observable(0);
+        self.showTimes = ko.observable({
+            opacity: 0
+        });
         self.recorded = ko.observable({
             opacity: 0,
             top: 0,
@@ -63,7 +69,9 @@ function (
         pubsub.subscribe(function () {
             self.showStopwatch(true);
             self.stopwatch.start();
-            self.stopButton(1);
+            self.stopButton({
+                opacity: 1
+            });
         }, self, "countdownEnd");
 
         // Once play is clicked, give a short countdown so
@@ -102,22 +110,32 @@ function (
             self.startButtons({
                 opacity: 0
             });
-            self.showTimes(1);
+            self.showTimes({
+                opacity: 1
+            });
             document.body.style.overflow = "auto";
         };
 
         // Pause the stopwatch
         self.pause = function () {
             self.stopwatch.pause();
-            self.stopButton(0);
-            self.pauseButtons(1);
+            self.stopButton({
+                opacity: 0
+            });
+            self.pauseButtons({
+                opacity: 1
+            });
         };
 
         // Resume a paused stopwatch
         self.resume = function () {
             self.stopwatch.start();
-            self.stopButton(1);
-            self.pauseButtons(0);
+            self.stopButton({
+                opacity: 1
+            });
+            self.pauseButtons({
+                opacity: 0
+            });
         };
 
         // Discard the current recorded time by creating a new stopwatch intervals
@@ -138,12 +156,18 @@ function (
 
         // Display the main screen
         self.home = function () {
-            self.stopButton(0);
-            self.pauseButtons(0);
+            self.stopButton({
+                opacity: 0
+            });
+            self.pauseButtons({
+                opacity: 0
+            });
             self.startButtons({
                 opacity: 1
             });
-            self.showTimes(0);
+            self.showTimes({
+                opacity: 0
+            });
             self.showStopwatch(false);
             document.body.style.background = "linear-gradient(to bottom, #0000e1 58%,#9701b5 100%) no-repeat";
             document.body.style.overflow = "hidden";
